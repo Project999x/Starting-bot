@@ -3,9 +3,10 @@ import os
 import json
 
 # Bot credentials
-API_ID = int(os.getenv("API_ID", "12345"))  # replace with your own
-API_HASH = os.getenv("API_HASH", "your_api_hash_here")
-BOT_TOKEN = os.getenv("BOT_TOKEN", "your_bot_token_here")
+API_ID = int(os.getenv("API_ID", "19822764
+"))  # replace with your own
+API_HASH = os.getenv("API_HASH", "b240e413364b8608a542a7cafc6903be")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8311348398:AAGy02UrCSC7eFRTt1lVg0yvuvIxWi7u0Pc")
 
 app = Client(
     "my_bot",
