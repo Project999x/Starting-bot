@@ -1,1 +1,91 @@
+from pyrogram import Client, filters
+import os
+import json
 
+# Bot credentials
+API_ID = int(os.getenv("API_ID", "12345"))  # replace with your own
+API_HASH = os.getenv("API_HASH", "your_api_hash_here")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "your_bot_token_here")
+
+app = Client(
+    "my_bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN
+)
+
+USERS_FILE = "users.json"
+
+# Load users
+if os.path.exists(USERS_FILE):
+    with open(USERS_FILE, "r") as f:
+        users_db = json.load(f)
+else:
+    users_db = {}
+
+def save_users():
+    with open(USERS_FILE, "w") as f:
+        json.dump(users_db, f, indent=4)
+
+# Example stickers (replace with your favorite sticker IDs)
+START_STICKER = "CAACAgIAAxkBAAEBHfVg8XbT9C1msh3l6Zc7aZUX9Nl4UwACXQADwZxgD2V6UOvOSkz-IAQ"
+PING_STICKER = "CAACAgIAAxkBAAEBHfZg8X6zZp7gJXQxhQwQyz0oR4ipVgACWQADwZxgDAw9Fgm3bJHkIAQ"
+HELP_STICKER = "CAACAgIAAxkBAAEBHfpg8X7f4eJQ4ZevquzT-Wv7lCzRswACXwADwZxgDDH1uW8w0Q6zIAQ"
+
+# /start command
+@app.on_message(filters.command("start"))
+async def start_command(client, message):
+    user_id = str(message.from_user.id)
+    username = message.from_user.username or message.from_user.first_name
+    users_db[user_id] = username
+    save_users()
+
+    await message.reply_sticker(START_STICKER)
+    text = f"✨ <b>Hello, {username}!</b> ✨\n\nWelcome to <i>My Pyrogram Bot</i> 🤖\nUse /help to see all available commands 📝"
+    await message.reply_text(text, parse_mode="html")
+
+# /help command
+@app.on_message(filters.command("help"))
+async def help_command(client, message):
+    await message.reply_sticker(HELP_STICKER)
+    text = (
+        "📜 <b>Available Commands</b> 📜\n\n"
+        "/start - Start the bot 🚀\n"
+        "/help - Show this help message 📝\n"
+        "/users - List all users 👥\n"
+        "/info - Bot info ℹ️\n"
+        "/ping - Check bot status 🏓"
+    )
+    await message.reply_text(text, parse_mode="html")
+
+# /users command
+@app.on_message(filters.command("users"))
+async def users_command(client, message):
+    if users_db:
+        user_list = "\n".join([f"👤 {uid} - @{uname}" for uid, uname in users_db.items()])
+        await message.reply_text(f"<b>Users who interacted with the bot:</b>\n{user_list}", parse_mode="html")
+    else:
+        await message.reply_text("❌ No users have interacted with the bot yet.", parse_mode="html")
+
+# /info command
+@app.on_message(filters.command("info"))
+async def info_command(client, message):
+    text = (
+        "🤖 <b>Bot Info</b> 🤖\n\n"
+        "Name: <i>My Pyrogram Bot</i>\n"
+        "Language: Python 🐍\n"
+        "Framework: Pyrogram ⚡\n"
+        "Status: ✅ Running"
+    )
+    await message.reply_text(text, parse_mode="html")
+
+# /ping command
+@app.on_message(filters.command("ping"))
+async def ping_command(client, message):
+    await message.reply_sticker(PING_STICKER)
+    await message.reply_text("🏓 Pong! Bot is alive!")
+
+# Run the bot
+if __name__ == "__main__":
+    print("✨ Bot started... ✨")
+    app.run()
