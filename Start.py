@@ -28,9 +28,9 @@ def save_users():
         json.dump(users_db, f, indent=4)
 
 # Example stickers (replace with your favorite sticker IDs)
-START_STICKER = "CAACAgIAAxkBAAEBHfVg8XbT9C1msh3l6Zc7aZUX9Nl4UwACXQADwZxgD2V6UOvOSkz-IAQ"
-PING_STICKER = "CAACAgIAAxkBAAEBHfZg8X6zZp7gJXQxhQwQyz0oR4ipVgACWQADwZxgDAw9Fgm3bJHkIAQ"
-HELP_STICKER = "CAACAgIAAxkBAAEBHfpg8X7f4eJQ4ZevquzT-Wv7lCzRswACXwADwZxgDDH1uW8w0Q6zIAQ"
+START_STICKER = "CAACAgUAAxkBAAIohGj7KiNDCwq7_AF09HZk_WTCar_tAALaAgAC48xIVd0dJb7bHOZJHgQ"
+PING_STICKER = "CAACAgUAAxkBAAIohmj7KiSMatHNaJeZ7G_9O2Iy-a2bAALyBQACrydIVU6UOnYuub5THgQ"
+HELP_STICKER = "CAACAgUAAxkBAAIokGj7KoVQcUfF6a9woj9azZOuXIkKAAK5EAACfV4QVMNYFRE0aPt8HgQ"
 
 # /start command
 @app.on_message(filters.command("start"))
