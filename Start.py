@@ -26,7 +26,7 @@ async def start_command(client: Client, message: Message):
     await message.reply_sticker("CAACAgUAAxkBAAIokGj7KoVQcUfF6a9woj9azZOuXIkKAAK5EAACfV4QVMNYFRE0aPt8HgQ")  # random sticker
     await message.reply_text(
         "✨ Hey there!\n\nI'm alive and running perfectly.\nUse /help to see available commands.",
-        parse_mode="HTML"
+        parse_mode="html"
     )
 
 @app.on_message(filters.command("help"))
